@@ -15,19 +15,19 @@ import static org.fest.assertions.api.Assertions.assertThat;
  */
 public class J02b_ConflictingDefaultMethodsTest {
 
-    private final RuleEngine ruleEngine = new RuleEngine();
+	private final RuleEngine ruleEngine = new RuleEngine();
 
-    @Test
-    public void shouldExtendFewInterfaces() {
-        assertThat(ruleEngine).isInstanceOf(Job.class);
-        assertThat(ruleEngine).isInstanceOf(Engine.class);
-        assertThat(ruleEngine).isInstanceOf(Lifecycle.class);
-    }
+	@Test
+	public void shouldExtendFewInterfaces() {
+		assertThat(ruleEngine).isInstanceOf(Job.class);
+		assertThat(ruleEngine).isInstanceOf(Engine.class);
+		assertThat(ruleEngine).isInstanceOf(Lifecycle.class);
+	}
 
-    @Test
-    public void shouldReturnValueFromJob() {
-        assertThat(ruleEngine.start()).isEqualTo("Job");
-    }
+	@Test
+	public void shouldReturnValueFromJob() {
+		assertThat(ruleEngine.start()).isEqualTo("Job");
+	}
 
 }
 
