@@ -1,12 +1,13 @@
 package com.nurkiewicz.java8;
 
 import com.nurkiewicz.java8.people.Person;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static com.nurkiewicz.java8.people.Sex.MALE;
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -15,7 +16,6 @@ import static org.fest.assertions.api.Assertions.assertThat;
  * Transform old-fashioned code using nulls with Optional
  * Hint: use map/filter/flatMap/ifPresent
  */
-@Ignore
 public class J06_OptionalTest {
 
 	private static final int PERSON_ID_WITH_NO_ADDRESS = 1;
@@ -23,7 +23,7 @@ public class J06_OptionalTest {
 	private static final int UNAVAILABLE_PERSON_ID = 0;
 
 	private Person findPersonOrNull(int id) {
-		switch(id) {
+		switch (id) {
 			case PERSON_ID_WITH_NO_ADDRESS:
 				return new Person("James", MALE, 62, 169, LocalDate.of(2007, Month.DECEMBER, 21));
 			case PERSON_ID_WITH_ADDRESS:
@@ -78,7 +78,10 @@ public class J06_OptionalTest {
 	 * TODO: Copy and refactor code from {@link #lookupAddressByIdOrNull}, but avoid nulls
 	 */
 	private Optional<String> tryLookupAddressById(int id) {
-		return Optional.empty(); // tryFindPerson(id).
+		return tryFindPerson(id).filter(p -> p.getSex().equals(MALE))
+				.flatMap(this::tryLookupAddress)
+				.filter(address -> !address.isEmpty())
+				.map(address -> address.trim());
 	}
 
 	@Test
